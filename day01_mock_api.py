@@ -37,6 +37,6 @@ def handle_request(request):
                   "prediction": "Fail"
               }
          }
-
+print(handle_request(request))
 
          
