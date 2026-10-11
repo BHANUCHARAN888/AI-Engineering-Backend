@@ -1,0 +1,240 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="description"
+        content="Organize your personal library, discover books, and track your reading."
+    >
+
+    <title>Bookworm | Personal Library</title>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js" defer></script>
+</head>
+
+<body>
+    <div class="app-container">
+
+        <!-- ========== SIDEBAR ========== -->
+        <aside class="sidebar">
+            <a class="brand" href="#home" aria-label="Bookworm home">
+                <span class="brand-icon">B</span>
+                <span>Bookworm</span>
+            </a>
+
+            <nav class="navigation" aria-label="Main navigation">
+                <a href="#home" class="nav-link" id="home-link">
+                    <span class="nav-icon" aria-hidden="true">⌂</span>
+                    <span>Home</span>
+                </a>
+
+                <a href="#books" class="nav-link active" id="library-link">
+                    <span class="nav-icon" aria-hidden="true">♧</span>
+                    <span>Library</span>
+                </a>
+
+                <a href="#community" class="nav-link">
+                    <span class="nav-icon" aria-hidden="true">♧</span>
+                    <span>Community</span>
+                </a>
+
+                <a href="#ai-integration" class="nav-link">
+                    <span class="nav-icon" aria-hidden="true">ϟ</span>
+                    <span>AI Integration</span>
+                    <span class="nav-chevron">›</span>
+                </a>
+
+                <a href="#settings" class="nav-link">
+                    <span class="nav-icon" aria-hidden="true">⚙</span>
+                    <span>Settings</span>
+                </a>
+
+                <a href="#help" class="nav-link">
+                    <span class="nav-icon" aria-hidden="true">ⓘ</span>
+                    <span>Help</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-profile">
+                <div class="profile-avatar" aria-hidden="true">B</div>
+                <div class="profile-details">
+                    <strong>Library Member</strong>
+                    <span>Personal collection</span>
+                </div>
+                <button
+                    type="button"
+                    id="profile-menu"
+                    class="icon-button"
+                    aria-label="Profile menu"
+                >⌄</button>
+            </div>
+        </aside>
+
+        <!-- ========== MAIN APPLICATION ========== -->
+        <main class="main-content" id="home">
+
+            <!-- Top search bar -->
+            <header class="topbar">
+                <form class="search-box" id="search-form" role="search">
+                    <span aria-hidden="true">⌕</span>
+                    <input
+                        type="search"
+                        id="search-input"
+                        placeholder="Search by title or author..."
+                        aria-label="Search books by title or author"
+                    >
+                    <button type="submit" class="sr-only">
+                        Search
+                    </button>
+                </form>
+
+                <div class="filter-wrapper">
+                    <label for="status-filter" class="sr-only">
+                        Filter books by reading status
+                    </label>
+
+                    <select id="status-filter" class="filter-select">
+                        <option value="all">☷ Filter: All</option>
+                        <option value="Want to Read">Want to Read</option>
+                        <option value="Reading">Reading</option>
+                        <option value="Completed">Completed</option>
+                    </select>
+                </div>
+
+                <button
+                    type="button"
+                    id="theme-toggle"
+                    class="icon-button notification-button"
+                    aria-label="Toggle dark mode"
+                    title="Toggle dark mode"
+                >♧</button>
+            </header>
+
+            <!-- Library content -->
+            <section class="library-content" id="books">
+
+                <div class="library-heading">
+                    <div class="heading-title">
+                        <span class="back-arrow" aria-hidden="true">←</span>
+                        <h1>My Library <span id="library-count">(0)</span></h1>
+                    </div>
+
+                    <p class="library-subtitle">
+                        Your collection, all in one place.
+                    </p>
+                </div>
+
+                <!-- JavaScript renders the book cards here -->
+                <div
+                    class="book-grid"
+                    id="book-grid"
+                    aria-label="Your book collection"
+                    aria-live="polite"
+                >
+                    <p class="empty-state">Loading your library...</p>
+                </div>
+
+                <!-- Add book tile -->
+                <button
+                    type="button"
+                    class="add-book-tile"
+                    id="add-book-button"
+                >
+                    <span class="add-book-icon" aria-hidden="true">+</span>
+                    <span>Add New Book</span>
+                </button>
+
+                <!-- Empty search message can be rendered by JavaScript -->
+            </section>
+
+            <footer class="page-footer">
+                <span>Bookworm</span>
+                <span>Made for readers, one book at a time.</span>
+            </footer>
+        </main>
+    </div>
+
+    <!-- ========== ADD / EDIT BOOK DIALOG ========== -->
+    <dialog id="book-dialog" aria-labelledby="dialog-title">
+        <div class="dialog-header">
+            <div>
+                <p class="dialog-eyebrow">YOUR COLLECTION</p>
+                <h2 id="dialog-title">Add New Book</h2>
+            </div>
+
+            <button
+                type="button"
+                id="close-dialog"
+                class="icon-button"
+                aria-label="Close dialog"
+            >✕</button>
+        </div>
+
+        <form id="book-form">
+            <input type="hidden" id="book-id">
+
+            <div class="form-group">
+                <label for="book-title">Book Title *</label>
+                <input
+                    type="text"
+                    id="book-title"
+                    placeholder="Enter book title"
+                    maxlength="150"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="book-author">Author *</label>
+                <input
+                    type="text"
+                    id="book-author"
+                    placeholder="Enter author name"
+                    maxlength="100"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="book-year">Publication Year *</label>
+                <input
+                    type="number"
+                    id="book-year"
+                    placeholder="e.g. 2024"
+                    min="1"
+                    max="2100"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="book-status">Reading Status *</label>
+                <select id="book-status" required>
+                    <option value="Want to Read">Want to Read</option>
+                    <option value="Reading">Reading</option>
+                    <option value="Completed">Completed</option>
+                </select>
+            </div>
+
+            <p id="form-error" class="form-error" role="alert"></p>
+
+            <div class="form-actions">
+                <button
+                    type="button"
+                    id="cancel-dialog"
+                    class="secondary-button"
+                >Cancel</button>
+
+                <button
+                    type="submit"
+                    id="save-book-button"
+                    class="primary-button"
+                >Add Book</button>
+            </div>
+        </form>
+    </dialog>
+</body>
+</html>

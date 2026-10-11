@@ -1,0 +1,974 @@
+
+/* =========================================
+   1. DESIGN SYSTEM
+========================================= */
+
+:root {
+    --green: #08651f;
+    --green-dark: #064b19;
+    --green-light: #e7f2e9;
+    --mint: #f3f9f5;
+    --mint-card: #e5f0e7;
+    --white: #ffffff;
+    --text: #202124;
+    --muted: #737980;
+    --border: #e4e8e5;
+    --danger: #c62828;
+    --shadow: 0 10px 35px rgba(30, 60, 40, 0.07);
+    --radius: 5px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: var(--text);
+    background: #eef1ee;
+    line-height: 1.5;
+}
+
+button,
+input,
+select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible {
+    outline: 3px solid #80b88c;
+    outline-offset: 3px;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* =========================================
+   2. APPLICATION LAYOUT
+========================================= */
+
+.app-container {
+    display: flex;
+    width: min(100%, 1800px);
+    min-height: 100vh;
+    margin: 0 auto;
+    background: var(--white);
+    box-shadow: var(--shadow);
+}
+
+.sidebar {
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex: 0 0 245px;
+    flex-direction: column;
+    align-self: flex-start;
+    width: 245px;
+    height: 100vh;
+    min-height: 650px;
+    padding: 25px 13px 20px;
+    background: var(--white);
+    border-right: 1px solid var(--border);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 53px;
+    margin: 0 5px 35px;
+    color: var(--green-dark);
+    text-decoration: none;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.brand-icon {
+    display: grid;
+    width: 35px;
+    height: 35px;
+    place-items: center;
+    color: var(--white);
+    background: var(--green);
+    border-radius: 4px;
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.navigation {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.nav-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    min-height: 47px;
+    padding: 11px 13px;
+    color: #30343a;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background 0.18s ease, color 0.18s ease;
+}
+
+.nav-link:hover {
+    background: #f3f8f4;
+    color: var(--green);
+}
+
+.nav-link.active {
+    color: var(--green-dark);
+    background: #edf6ef;
+    font-weight: 600;
+}
+
+.nav-link.active::before {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 4px;
+    background: var(--green);
+    border-radius: 4px 0 0 4px;
+    content: "";
+}
+
+.nav-icon {
+    display: grid;
+    width: 22px;
+    flex-shrink: 0;
+    place-items: center;
+    font-size: 22px;
+    line-height: 1;
+}
+
+.nav-chevron {
+    margin-left: auto;
+    font-size: 22px;
+}
+
+.sidebar-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: auto;
+    padding: 11px 9px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+}
+
+.profile-avatar {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    place-items: center;
+    color: white;
+    background: var(--green);
+    border-radius: 50%;
+    font-weight: 700;
+}
+
+.profile-details {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.profile-details strong {
+    overflow: hidden;
+    font-size: 12px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.profile-details span {
+    overflow: hidden;
+    color: var(--muted);
+    font-size: 11px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* =========================================
+   3. MAIN CONTENT AND TOP BAR
+========================================= */
+
+.main-content {
+    flex: 1;
+    min-width: 0;
+    background: var(--mint);
+}
+
+.topbar {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    min-height: 82px;
+    padding: 16px 27px;
+    background: rgba(255, 255, 255, 0.97);
+    border-bottom: 1px solid var(--border);
+}
+
+.search-box {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    gap: 13px;
+    min-width: 0;
+    height: 43px;
+    padding: 0 15px;
+    border: 1px solid #d6d9d6;
+    border-radius: 30px;
+    background: var(--white);
+}
+
+.search-box > span {
+    color: #858b87;
+    font-size: 25px;
+    line-height: 1;
+}
+
+.search-box input {
+    width: 100%;
+    min-width: 0;
+    height: 100%;
+    color: var(--text);
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 14px;
+}
+
+.search-box input:focus-visible {
+    outline: none;
+}
+
+.search-box input::placeholder {
+    color: #a0a5a1;
+}
+
+.filter-wrapper {
+    flex-shrink: 0;
+}
+
+.filter-select {
+    width: 125px;
+    height: 42px;
+    padding: 0 10px;
+    color: #656b66;
+    background: var(--white);
+    border: 1px solid #d9ddd9;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+.icon-button {
+    display: grid;
+    width: 39px;
+    height: 39px;
+    flex-shrink: 0;
+    place-items: center;
+    color: #414941;
+    background: var(--white);
+    border: 1px solid #e0e4e0;
+    border-radius: 5px;
+    font-size: 19px;
+}
+
+.icon-button:hover {
+    color: var(--green);
+    background: #f3f8f4;
+}
+
+.notification-button {
+    margin-left: auto;
+}
+
+/* =========================================
+   4. LIBRARY HEADING
+========================================= */
+
+.library-content {
+    padding: 35px 27px 45px;
+}
+
+.library-heading {
+    margin-bottom: 30px;
+}
+
+.heading-title {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.back-arrow {
+    color: #29342d;
+    font-size: 26px;
+    line-height: 1;
+}
+
+.heading-title h1 {
+    font-size: 25px;
+    font-weight: 650;
+    letter-spacing: -0.6px;
+}
+
+#library-count {
+    color: #888e89;
+    font-weight: 400;
+}
+
+.library-subtitle {
+    display: none;
+    margin-top: 5px;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+/* =========================================
+   5. BOOK GALLERY
+========================================= */
+
+.book-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 24px 20px;
+    align-items: stretch;
+}
+
+.book-card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+.book-cover {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 220px;
+    overflow: hidden;
+    padding: 20px;
+    background: var(--mint-card);
+    border-radius: 2px;
+}
+
+.book-cover img {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    box-shadow: 0 4px 10px rgba(20, 40, 25, 0.12);
+}
+
+.book-cover-placeholder {
+    display: grid;
+    width: 90px;
+    height: 130px;
+    place-items: center;
+    padding: 10px;
+    color: var(--green-dark);
+    background: #d1e4d5;
+    border: 1px solid #c0d8c5;
+    text-align: center;
+    overflow-wrap: anywhere;
+    font-family: Georgia, serif;
+    font-size: 14px;
+}
+
+.book-details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    min-width: 0;
+    padding-top: 13px;
+}
+
+.book-title {
+    display: -webkit-box;
+    width: 100%;
+    overflow: hidden;
+    color: #171b18;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+}
+
+.book-author,
+.book-year {
+    width: 100%;
+    overflow: hidden;
+    color: #6f7771;
+    font-size: 14px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.book-status {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    margin-top: 5px;
+    padding: 4px 9px;
+    color: var(--green-dark);
+    background: #e1f2e5;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.status-want-to-read {
+    color: #93651b;
+    background: #fbf0d9;
+}
+
+.status-reading {
+    color: #12652a;
+    background: #e0f1e3;
+}
+
+.status-completed {
+    color: #176334;
+    background: #d9f0df;
+}
+
+/* Card action buttons */
+
+.book-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.book-actions button {
+    padding: 6px 11px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.edit-button {
+    color: var(--green-dark);
+    background: #edf6ef;
+    border: 1px solid #d5e7d9;
+}
+
+.edit-button:hover {
+    background: #dcefe0;
+}
+
+.delete-button {
+    color: var(--danger);
+    background: #fff1f0;
+    border: 1px solid #f1d6d3;
+}
+
+.delete-button:hover {
+    background: #ffe2df;
+}
+
+/* Optional hover overlay for cover */
+
+.book-cover .book-actions {
+    position: absolute;
+    top: 9px;
+    right: 9px;
+    display: flex;
+    gap: 5px;
+    margin: 0;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.book-card:hover .book-cover .book-actions,
+.book-card:focus-within .book-cover .book-actions {
+    opacity: 1;
+}
+
+.book-cover .book-actions button {
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    background: white;
+    border: 1px solid #e4e9e4;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+/* =========================================
+   6. ADD BOOK TILE
+========================================= */
+
+.add-book-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    width: 100%;
+    min-height: 270px;
+    margin-top: 24px;
+    padding: 25px;
+    color: #202720;
+    background: transparent;
+    border: 1px dashed transparent;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.add-book-tile:hover {
+    background: #e9f4eb;
+    border-color: #cfe2d2;
+}
+
+.add-book-icon {
+    display: grid;
+    width: 60px;
+    height: 60px;
+    place-items: center;
+    color: white;
+    background: var(--green);
+    border-radius: 50%;
+    font-size: 37px;
+    font-weight: 300;
+    line-height: 1;
+}
+
+.add-book-tile:hover .add-book-icon {
+    background: var(--green-dark);
+}
+
+/* Empty state */
+
+.empty-state {
+    grid-column: 1 / -1;
+    padding: 50px 20px;
+    color: var(--muted);
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px dashed #d3e0d5;
+    border-radius: 5px;
+    text-align: center;
+}
+
+/* =========================================
+   7. ADD / EDIT BOOK DIALOG
+========================================= */
+
+#book-dialog {
+    width: min(480px, calc(100% - 30px));
+    max-height: 90vh;
+    overflow-y: auto;
+    margin: auto;
+    padding: 27px;
+    color: var(--text);
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    box-shadow: 0 25px 80px rgba(20, 40, 25, 0.2);
+}
+
+#book-dialog::backdrop {
+    background: rgba(18, 35, 23, 0.45);
+    -webkit-backdrop-filter: blur(3px);
+    backdrop-filter: blur(3px);
+}
+
+.dialog-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.dialog-eyebrow {
+    margin-bottom: 4px;
+    color: var(--green);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+.dialog-header h2 {
+    font-size: 23px;
+    letter-spacing: -0.5px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    margin-bottom: 17px;
+}
+
+.form-group label {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    min-width: 0;
+    height: 44px;
+    padding: 0 12px;
+    color: var(--text);
+    background: #fcfdfc;
+    border: 1px solid #dce4dd;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #75a981;
+}
+
+.form-error {
+    margin-top: 5px;
+    color: var(--danger);
+    font-size: 13px;
+}
+
+.form-error:empty {
+    display: none;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.primary-button,
+.secondary-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: 10px 17px;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.primary-button {
+    color: white;
+    background: var(--green);
+    border: 1px solid var(--green);
+}
+
+.primary-button:hover {
+    background: var(--green-dark);
+}
+
+.secondary-button {
+    color: #424a43;
+    background: white;
+    border: 1px solid #dce2dc;
+}
+
+.secondary-button:hover {
+    background: #f4f7f4;
+}
+
+/* =========================================
+   8. FOOTER
+========================================= */
+
+.page-footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 18px 27px;
+    color: #858d86;
+    background: var(--white);
+    border-top: 1px solid var(--border);
+    font-size: 11px;
+}
+
+/* =========================================
+   9. RESPONSIVE DESIGN
+========================================= */
+
+@media (min-width: 1500px) {
+    .book-cover {
+        height: 245px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .sidebar {
+        flex-basis: 210px;
+        width: 210px;
+    }
+
+    .book-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .library-content {
+        padding: 28px 22px 35px;
+    }
+
+    .topbar {
+        padding: 15px 22px;
+        gap: 12px;
+    }
+}
+
+@media (max-width: 850px) {
+    .app-container {
+        display: block;
+    }
+
+    .sidebar {
+        position: static;
+        width: 100%;
+        height: auto;
+        min-height: 0;
+        padding: 13px 18px;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .brand {
+        margin: 0 0 12px;
+    }
+
+    .navigation {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+
+    .nav-link {
+        min-height: 39px;
+        gap: 7px;
+        padding: 8px 10px;
+        font-size: 13px;
+    }
+
+    .nav-icon {
+        width: auto;
+        font-size: 17px;
+    }
+
+    .nav-chevron,
+    .sidebar-profile {
+        display: none;
+    }
+
+    .topbar {
+        position: static;
+    }
+
+    .book-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 20px 15px;
+    }
+
+    .book-cover {
+        height: 190px;
+    }
+
+    .add-book-tile {
+        min-height: 200px;
+    }
+}
+
+@media (max-width: 600px) {
+    .topbar {
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 13px;
+    }
+
+    .search-box {
+        flex-basis: 100%;
+    }
+
+    .filter-select {
+        width: 145px;
+    }
+
+    .notification-button {
+        margin-left: auto;
+    }
+
+    .library-content {
+        padding: 22px 14px 30px;
+    }
+
+    .heading-title h1 {
+        font-size: 22px;
+    }
+
+    .book-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 23px 13px;
+    }
+
+    .book-cover {
+        height: 175px;
+        padding: 14px;
+    }
+
+    .book-title {
+        font-size: 14px;
+    }
+
+    .book-author,
+    .book-year {
+        font-size: 12px;
+    }
+
+    .book-actions button {
+        padding: 6px 8px;
+        font-size: 11px;
+    }
+
+    .add-book-tile {
+        min-height: 170px;
+    }
+
+    .page-footer {
+        flex-direction: column;
+        padding: 16px;
+    }
+}
+
+@media (max-width: 370px) {
+    .nav-link {
+        font-size: 12px;
+        padding: 7px;
+    }
+
+    .nav-icon {
+        display: none;
+    }
+
+    .book-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .book-cover {
+        height: 220px;
+    }
+}
+
+/* =========================================
+   10. DARK MODE
+========================================= */
+
+body.dark-theme {
+    --white: #17251b;
+    --text: #edf5ee;
+    --muted: #aab8ac;
+    --border: #344739;
+    --mint: #101c14;
+    --mint-card: #263c2b;
+    --green-light: #24432b;
+    --shadow: 0 10px 35px rgba(0, 0, 0, 0.15);
+
+    background: #101c14;
+}
+
+body.dark-theme .app-container,
+body.dark-theme .sidebar,
+body.dark-theme .topbar,
+body.dark-theme .page-footer {
+    background: var(--white);
+}
+
+body.dark-theme .nav-link {
+    color: #d8e6da;
+}
+
+body.dark-theme .nav-link.active,
+body.dark-theme .nav-link:hover {
+    color: #b9e6c1;
+    background: #263d2b;
+}
+
+body.dark-theme .book-title,
+body.dark-theme .heading-title,
+body.dark-theme .back-arrow,
+body.dark-theme .add-book-tile {
+    color: var(--text);
+}
+
+body.dark-theme .search-box,
+body.dark-theme .filter-select,
+body.dark-theme .icon-button {
+    color: var(--text);
+    background: #1b2d20;
+    border-color: var(--border);
+}
+
+body.dark-theme .search-box input,
+body.dark-theme .form-group input,
+body.dark-theme .form-group select {
+    color: var(--text);
+}
+
+body.dark-theme .form-group input,
+body.dark-theme .form-group select,
+body.dark-theme .secondary-button {
+    background: #1b2d20;
+    border-color: var(--border);
+}
+
+body.dark-theme .add-book-tile:hover {
+    background: #203726;
+}
+
+body.dark-theme .empty-state {
+    background: #17251b;
+    border-color: var(--border);
+}
