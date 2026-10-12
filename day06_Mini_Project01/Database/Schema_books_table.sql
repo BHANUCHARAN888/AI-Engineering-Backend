@@ -15,3 +15,4 @@ CREATE TABLE books (
 
 DESCRIBE books;
 SHOW tables;
+SELECT * FROM books;
