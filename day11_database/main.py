@@ -1,5 +1,6 @@
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
+from sqlalchemy import asc, desc
 
 from database import SessionLocal
 from models import User
@@ -40,10 +41,28 @@ def create_user(user: UserCreate, db: Session = Depends(get_db)):
 
     return new_user
 
+
+
 @app.get("/users", response_model=list[UserResponse])
-def get_users(db: Session = Depends(get_db)):
-    users = db.query(User).all()
+def get_users(
+    skip: int = Query(0, ge=0),
+    limit: int = Query(10, ge=1, le=100),
+    username: str | None = None,
+    email: str | None = None,
+    db: Session = Depends(get_db)
+):
+    query = db.query(User)
+
+    if username:
+        query = query.filter(User.username == username)
+
+    if email:
+        query = query.filter(User.email == email)
+
+    users = query.offset(skip).limit(limit).all()
     return users
+
+
 
 @app.get("/users/{user_id}", response_model=UserResponse)
 def get_user(user_id: int, db: Session = Depends(get_db)):
